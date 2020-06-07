@@ -46,6 +46,15 @@ export default class App extends React.Component {
     	});
 }
   async componentDidMount() {
+    try {
+  await SplashScreen.preventAutoHideAsync();
+} catch (e) {
+  console.warn(e);
+}
+this.prepareResources();
+}
+prepareResources = async () => {
+
       this.setState({width:Math.round(Dimensions.get('window').width), height:Math.round(Dimensions.get('window').height)})
       const status = await Contacts.requestPermissionsAsync();
       await Font.loadAsync({
@@ -69,6 +78,9 @@ export default class App extends React.Component {
           catch{
 
           }
+          this.setState(async () => {
+          await SplashScreen.hideAsync();
+        });
       }
       this.setState({contactsLoaded:true, contacts:cleaned_contacts})})
       AsyncStorage.setItem('hi',"well aren't ya a smart cookie for checkin this.")
