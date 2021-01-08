@@ -14,6 +14,11 @@ return(
   style={{position: 'absolute', bottom:0, marginLeft:-150, zIndex:-100}}
   source={require('./../assets/footer.png')}
   />
+  <View style={{width:`80%`, bottom:0, marginBottom:40,position:`absolute`, alignItems:`center`}}>
+  <View style={{flex:1, flexDirection: 'row', width:`100%`}}>
+    <Text style={{marginLeft:`10%`,fontFamily:`Roboto`,color:`white`}}> Contact Us | About Us </Text>
+  </View>
+  </View>
   </View>
 )
 }

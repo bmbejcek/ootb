@@ -5,6 +5,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         overflow: 'hidden',
+        width:`100%`,
+        justifyContent:`space-between`
     },
 
     text: {

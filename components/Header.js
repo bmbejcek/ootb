@@ -13,6 +13,7 @@ export default class Header extends React.Component {
       <View style={[styles.tabHolder]}>
       <TouchableHighlight
       disabled={this.props.homeScreenActive}
+      underlayColor='none'
       style={[styles.settingsButton, this.props.homeScreenActive ? { backgroundColor: 'white' } : { backgroundColor: '#3959D2' }]}
       onPress={this.handleClick.bind(this,'home')}>
         <Text
@@ -21,6 +22,7 @@ export default class Header extends React.Component {
       </TouchableHighlight>
       <TouchableHighlight
       disabled={!this.props.homeScreenActive}
+      underlayColor='none'
       style={[styles.settingsButton, this.props.homeScreenActive ? { backgroundColor: '#3959D2' } : { backgroundColor: 'white' }]}
       onPress={this.handleClick.bind(this,'settings')}>
         <Text
