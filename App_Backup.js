@@ -19,6 +19,7 @@ export default class App extends React.Component {
     first:"XXXXXXXXXX",
     last: "XXXXXXXXXX",
     phone:"",
+    data: null,
     fontLoaded: false,
     contactDisabled: true,
     homeScreen: true,
