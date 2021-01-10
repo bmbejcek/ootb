@@ -24,8 +24,6 @@ export default class App extends React.Component {
     contactDisabled: true,
     homeScreen: true,
     contacts: [],
-    enabled: [],
-    disabled: [],
     contactsLoaded: false,
     storageKeys: null,
     Disabled:false,
@@ -72,7 +70,6 @@ prepareResources = async () => {
         sort: Contacts.SortTypes.LastName
       }).then(r => {
         let cleaned_contacts = []
-        //
         for(let i = 0; i < r.data.length; i++){
           try{
             if(r.data[i].phoneNumbers.length>0){

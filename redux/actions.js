@@ -1,23 +1,25 @@
-import {  LOAD_DATA_BEGIN,
-          LOAD_DATA_SUCCESS,
-          LOAD_DATA_ERROR,
-          LOAD_KEYS_BEGIN,
-          LOAD_KEYS_SUCCESS,
-          LOAD_KEYS_ERROR
-        } from './types.js';
 import { AsyncStorage} from "react-native";
 import * as Contacts from 'expo-contacts';
 
-export function loadData() {
+export const TOGGLE_SCREEN = 'TOGGLE_SCREEN';
+export const TOGGLE_CONTACT = 'TOGGLE_CONTACT';
+export const SHUFFLE = 'SHUFFLE';
+
+export const LOAD_CONTACTS_SUCCESS = 'LOAD_CONTACTS_SUCCESS'
+export const LOAD_CONTACTS_ERROR = 'LOAD_CONTACTS_ERROR'
+
+export const LOAD_KEYS_SUCCESS = 'LOAD_KEYS_SUCCESS'
+export const LOAD_KEYS_ERROR = 'LOAD_KEYS_ERROR'
+
+export function loadContacts() {
   return dispatch => {
-    console.log('load_data_started')
-    dispatch(loadDataBegin());
     return Contacts.getContactsAsync({
       fields: [Contacts.Fields.ID, Contacts.Fields.FirstName, Contacts.Fields.LastName,Contacts.Fields.PhoneNumbers],
       pageSize: 0,
       pageOffset: 0,
       sort: Contacts.SortTypes.LastName
     }).then(r => {
+      AsyncStorage.setItem('hi',"well aren't ya a smart cookie for checkin this.")
       let cleaned_contacts = []
       for(let i = 0; i < r.data.length; i++){
         try{
@@ -28,58 +30,48 @@ export function loadData() {
         catch{
         }
     }
-    dispatch(loadDataSuccess(cleaned_contacts));
+    return dispatch(loadContactsSuccess(cleaned_contacts));
   }).catch(error =>
-        dispatch(loadDataError(error))
+        dispatch(loadContactsError(error))
       );
-}}
+}
+}
 
 export function loadKeys() {
   return dispatch => {
-    dispatch(loadKeysBegin());
-    return AsyncStorage.getAllKeys().then((r)=> loadKeysSuccess(JSON.stringify(r))).catch(error =>
+    return AsyncStorage.getAllKeys().then((r)=>
+    dispatch(loadKeysSuccess(r.slice()))
+  ).catch(error =>
         dispatch(loadKeysError(error))
       );
 }}
 
-export const loadDataBegin = () => ({
-  type: LOAD_DATA_BEGIN
-});
-
-export const loadDataSuccess = contacts =>({
-    type: LOAD_DATA_SUCCESS,
-    payload: {
-      contacts
-    }
+export const loadContactsSuccess = contacts =>({
+    type: LOAD_CONTACTS_SUCCESS,
+    payload: contacts.slice()
 })
 
-export const loadDataError = error => ({
-  type: LOAD_DATA_ERROR,
-  payload: { error }
-});
-
-export const loadKeysBegin = () => ({
-  type: LOAD_KEYS_BEGIN
+export const loadContactsError = error => ({
+  type: LOAD_CONTACTS_ERROR,
+  payload: error
 });
 
 export const loadKeysSuccess = keys =>({
     type: LOAD_KEYS_SUCCESS,
-    payload: {
-      keys
-    }
+    payload: keys
 })
 
 export const loadKeysError = error => ({
   type: LOAD_KEYS_ERROR,
-  payload: { error }
+  payload: error
 });
 
-// export function toggleScreen() {
-//   return {
-//     type: TOGGLE_SCREEN
-//   };
-// }
-//
+export function toggleScreen() {
+  return {
+    type: TOGGLE_SCREEN
+  };
+}
+
 // export const toggleContact = id => ({
 //     type: TOGGLE_CONTACT,
 //     payload: {
