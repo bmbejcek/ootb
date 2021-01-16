@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ootb_clean_slate",
-    "slug": "ootb_clean_slate",
+    "name": "Out of the Blue",
+    "slug": "ootb",
     "platforms": [
       "ios",
       "android",
@@ -23,7 +23,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.brettbejcek.outoftheblue",
+      "buildNumber": "1.0.0",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.brettbejcek.outoftheblue",
+      "versionCode": 1,
+      "permissions":["READ_CONTACTS", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"]
     }
   }
 }

@@ -23,7 +23,7 @@ export function loadContacts() {
       let cleaned_contacts = []
       for(let i = 0; i < r.data.length; i++){
         try{
-          if(r.data[i].phoneNumbers.length>0){
+          if((r.data[i].phoneNumbers.length>0)&&(r.data[i].name.length>0)){
             cleaned_contacts.push(r.data[i])
           }
         }
@@ -77,17 +77,3 @@ export function shuffle() {
     type: SHUFFLE
   };
 }
-
-// export const toggleContact = id => ({
-//     type: TOGGLE_CONTACT,
-//     payload: {
-//     id
-//   }
-// })
-//
-// export const shuffle = id => ({
-//     type: SHUFFLE,
-//     payload: {
-//     id
-//   }
-// })

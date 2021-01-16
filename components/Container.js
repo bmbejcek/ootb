@@ -1,23 +1,39 @@
 import React from "react";
-import { Text, View, TouchableHighlight, TouchableOpacity, Image } from "react-native";
+import { Animated, Text, View, TouchableHighlight, TouchableOpacity, Image, ScrollView } from "react-native";
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Contacts from 'expo-contacts';
 import { connect } from 'react-redux'
-import {loadContacts, loadKeys, toggleScreen } from './../redux/actions';
+import {loadContacts, loadKeys, toggleScreen, shuffle } from './../redux/actions';
 import home from './../assets/home-min.png'
 import * as SMS from 'expo-sms';
+import TypeWriter from 'react-native-typewriter'
+import ContactList from './ContactList.js'
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 class Container extends React.Component {
 
-async componentDidMount() {
+state = {
+    marginValue: new Animated.Value(0)
+  };
+
+async componentWillMount() {
   const { status } = await Contacts.requestPermissionsAsync();
-  console.log(status)
   if (status === 'granted') {
     this.props.loadContactsInitialize();
     this.props.loadKeysInitialize();
   }
 }
+
+_start = () => {
+  this.props.shuffle()
+  Animated.timing(this.state.marginValue, {
+    toValue: this.props.marginLeft,
+    duration: 1000
+  }).start();
+};
+
+
 
 text = async() => {
   const isAvailable = await SMS.isAvailableAsync();
@@ -32,34 +48,31 @@ text = async() => {
 }
 
 handleOnClick = () => {
+        this.props.loadKeysInitialize();
         this.props.toggleScreenClick(); // This prop acts as key to callback prop for mapDispatchToProps
     }
 
-handleOnShuffle = () => {
-        this.props.shuffle(); // This prop acts as key to callback prop for mapDispatchToProps
-    }
-
 render(){
-  const { homeScreen, phone, storageKeys, contacts, error, toggleScreen, first, last } = this.props;
+  const { homeScreen, phone, storageKeys, contacts, error, toggleScreen, name, marginLeft } = this.props;
 
   if(homeScreen){
     return(
       <View style={{
         flex: 1,
         flexDirection: 'column',
-        paddingTop:50,
+        paddingTop:`10%`
       }}>
-        <TouchableOpacity onPress={this.handleOnClick}><Text style={{alignSelf: 'flex-end', right:30, fontFamily:'BebasNeue_400Regular', fontSize:20, color:`gray`}}>-->Settings</Text></TouchableOpacity>
-        <View style={{width: `100%`, height: `60%`, float:`right`}}>
-        <Image style={{height:`100%`, width:`100%`}} source={home} transition={false} />
+        <TouchableOpacity onPress={this.handleOnClick}><Text style={{alignSelf: 'flex-end', right:30, fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(2.5), color:`gray`}}>-->Settings</Text></TouchableOpacity>
+        <View style={{width: `100%`, height: `55%`, float:`right`}}>
+        <Animated.View style ={{marginLeft:this.state.marginValue}}><Image style={{height:`100%`, width:`100%`, overflow:`visible`}} source={home} /></Animated.View>
         </View>
-        <View style={{width: `100%`, height: `40%`}}>
-        <View style ={{left: 30}}>
-        <Text style = {{fontSize: 50, paddingTop:30, fontFamily:'BebasNeue_400Regular'}}>{first}</Text>
-        <Text style ={{fontSize: 50, paddingTop:10, fontFamily:'BebasNeue_400Regular'}}>{last}</Text>
-        <View style = {{display:`contents`, flexDirection:`row`, paddingTop:30}}>
-        <TouchableOpacity onPress={this.text}><Text style = {{fontFamily:'BebasNeue_400Regular', fontSize:30, textDecorationLine:`underline`}}>TEXT</Text></TouchableOpacity>
-        <TouchableOpacity onPress={this.text}><Text style = {{fontFamily:'BebasNeue_400Regular', fontSize:30, textDecorationLine:`underline`, marginLeft:20}}>SHUFFLE</Text></TouchableOpacity>
+        <View style={{width: `100%`, minHeight: `40%`}}>
+        <View style ={{left: 30, marginTop:20}}>
+        <TypeWriter style = {{color:`gray`,minHeight: 100,fontSize:RFPercentage(6.5), paddingTop:30, fontFamily:'BebasNeue_400Regular'}} typing={1}>{name}</TypeWriter>
+        <TypeWriter style = {{color:`gray`,minHeight: 100,fontSize:RFPercentage(4), fontFamily:'BebasNeue_400Regular'}} typing={1}>{phone}</TypeWriter>
+        <View style = {{display:`contents`, flexDirection:`row`}}>
+        <TouchableOpacity disabled = {!this.props.enabled} onPress={this.text}><Text style = {[{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(4), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>TEXT THEM</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => this._start()}><Text style = {{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(4), textDecorationLine:`underline`, marginLeft:20, color:`blue`}}>SHUFFLE</Text></TouchableOpacity>
         </View>
         </View>
         </View>
@@ -71,11 +84,18 @@ render(){
       <View style={{
         flex: 1,
         flexDirection: 'column',
-        paddingTop:50,
+        paddingTop:`10%`,
       }}>
-        <TouchableOpacity onPress={this.handleOnClick}><Text style={{alignSelf: 'flex-end', right:30, fontFamily:'BebasNeue_400Regular', fontSize:20, color:`gray`}}>{'<--Home'}</Text></TouchableOpacity>
-        <View style={{width: 50, height: `70%`, backgroundColor: 'steelblue', float:`right`}} />
-        <View style={{width: 50, height: `30%`, backgroundColor: 'skyblue'}} />
+        <TouchableOpacity onPress={this.handleOnClick}><Text style={{alignSelf: 'flex-end', right:30, fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(2.5), color:`gray`}}>{'<--Home'}</Text></TouchableOpacity>
+        <View style={{width: `100%`, height: `10%`, marginTop:50, float:`right`}}>
+        <Image style={{height:`100%`, width:`120%`, marginLeft:-50, overflow:`visible`}} source={home} />
+        </View>
+        <View style={{marginTop:50, paddingLeft:30, paddingRight:30, width: `100%`, paddingTop:30, height: `75%`}}>
+        <Text style ={{paddingBottom:10, fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(3)}}>Select your contacts to include</Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+        <ContactList storageKeys={this.props.storageKeys} contacts={this.props.contacts} />
+        </ScrollView>
+        </View>
       </View>
     )
   }
@@ -84,7 +104,6 @@ render(){
 }
 
 const mapStateToProps = state => {
-  console.log(state.reducers.homeScreen)
     return {
         loaded: state.reducers.loaded,
         contacts: state.reducers.contacts,
@@ -92,8 +111,9 @@ const mapStateToProps = state => {
         error: state.reducers.error,
         homeScreen: state.reducers.homeScreen,
         storageKeys: state.reducers.storageKeys,
-        first: state.reducers.first,
-        last: state.reducers.last,
+        name: state.reducers.name,
+        marginLeft: state.reducers.marginLeft,
+        enabled: state.reducers.enabled
     }
 }
 
@@ -115,4 +135,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container);
-// export default connect(mapStateToProps)(Container);

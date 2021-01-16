@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableHighlight, View, Image, AsyncStorage } from "react-native";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export default class App extends React.Component {
   state = {
@@ -31,7 +32,7 @@ export default class App extends React.Component {
 render(){
     return(
     <Text onPress={this.toggle.bind(this, this.props.id)} key= {this.props.id}
-    style={[contactStyles.name, this.state.enabled ? { color: 'white' } : { color: 'gray' }]}
+    style={[contactStyles.name, this.state.enabled ? { color: 'blue' } : { color: 'gray' }]}
     >{this.props.firstName} {this.props.lastName} {this.state.enabled ? '✓': null }</Text>
 
     )
@@ -41,8 +42,8 @@ render(){
 
   const contactStyles = StyleSheet.create({
     name: {
-      fontFamily: `Roboto`,
-      fontSize:17,
+      fontFamily: `BebasNeue_400Regular`,
+      fontSize:RFPercentage(3),
       paddingBottom:10,
       overflow:'hidden'
     }
