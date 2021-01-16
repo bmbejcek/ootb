@@ -9,7 +9,7 @@ const initialState = {
   contacts: [],
   first: "XXXXXXXXXX",
   last: "XXXXXXXXXX",
-  phone:"XXXXXXXXXX",
+  phone:"3306316125",
   homeScreen: true,
   storageKeys: [],
   lastPicked: null,

@@ -72,6 +72,12 @@ export function toggleScreen() {
   };
 }
 
+export function shuffle() {
+  return {
+    type: SHUFFLE
+  };
+}
+
 // export const toggleContact = id => ({
 //     type: TOGGLE_CONTACT,
 //     payload: {
