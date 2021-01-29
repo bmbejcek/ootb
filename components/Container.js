@@ -17,7 +17,7 @@ state = {
     marginValue: new Animated.Value(0)
   };
 
-async componentWillMount() {
+async componentDidMount() {
   const { status } = await Contacts.requestPermissionsAsync();
   if (status === 'granted') {
     this.props.loadContactsInitialize();

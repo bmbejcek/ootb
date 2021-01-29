@@ -7,7 +7,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,8 +24,11 @@
     ],
     "ios": {
       "bundleIdentifier": "com.brettbejcek.outoftheblue",
-      "buildNumber": "1.0.0",
-      "supportsTablet": false
+      "buildNumber": "1.0.1",
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSContactsUsageDescription": "This app uses contacts to select a random person for you to connect with."
+        }
     },
     "android": {
       "package": "com.brettbejcek.outoftheblue",
