@@ -10,6 +10,9 @@ import * as SMS from 'expo-sms';
 import TypeWriter from 'react-native-typewriter'
 import ContactList from './ContactList.js'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import * as Linking from 'expo-linking';
+import Onboarding from './../components/Onboarding.js'
+
 
 class Container extends React.Component {
 
@@ -29,7 +32,8 @@ _start = () => {
   this.props.shuffle()
   Animated.timing(this.state.marginValue, {
     toValue: this.props.marginLeft,
-    duration: 1000
+    duration: 1000,
+    useNativeDriver: false
   }).start();
 };
 
@@ -47,6 +51,18 @@ text = async() => {
 }
 }
 
+call = () => {
+  const url = 'tel:'+this.props.phone
+
+  Linking.canOpenURL(url)
+    .then((supported) => {
+      if (supported) {
+        return Linking.openURL(url)
+          .catch(() => null);
+      }
+    });
+}
+
 handleOnClick = () => {
         this.props.loadKeysInitialize();
         this.props.toggleScreenClick(); // This prop acts as key to callback prop for mapDispatchToProps
@@ -57,6 +73,7 @@ render(){
 
   if(homeScreen){
     return(
+      <Onboarding/>
       <View style={{
         flex: 1,
         flexDirection: 'column',
@@ -68,11 +85,12 @@ render(){
         </View>
         <View style={{width: `100%`, minHeight: `40%`}}>
         <View style ={{left: 30, marginTop:20}}>
-        <TypeWriter style = {{color:`gray`,minHeight: 100,fontSize:RFPercentage(6.5), paddingTop:30, fontFamily:'BebasNeue_400Regular'}} typing={1}>{name}</TypeWriter>
-        <TypeWriter style = {{color:`gray`,minHeight: 100,fontSize:RFPercentage(4), fontFamily:'BebasNeue_400Regular'}} typing={1}>{phone}</TypeWriter>
+        <TypeWriter style = {{color:`gray`,overflow:`hidden`,minHeight: 100,fontSize:RFPercentage(6.5), paddingTop:30, fontFamily:'BebasNeue_400Regular'}} typing={1}>{name}</TypeWriter>
+        <TypeWriter style = {{color:`gray`,overflow:`hidden`,minHeight: 100,fontSize:RFPercentage(4), fontFamily:'BebasNeue_400Regular'}} typing={1}>{phone}</TypeWriter>
         <View style = {{display:`contents`, flexDirection:`row`}}>
-        <TouchableOpacity disabled = {!this.props.enabled} onPress={this.text}><Text style = {[{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(4), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>TEXT THEM</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => this._start()}><Text style = {{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(4), textDecorationLine:`underline`, marginLeft:20, color:`blue`}}>SHUFFLE</Text></TouchableOpacity>
+        <TouchableOpacity disabled = {!this.props.enabled} onPress={this.text}><Text style = {[{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(3.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>TEXT THEM</Text></TouchableOpacity>
+        <TouchableOpacity disabled = {!this.props.enabled} onPress={this.call}><Text style = {[{fontFamily:'BebasNeue_400Regular', marginLeft:20, fontSize:RFPercentage(3.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>CALL THEM</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => this._start()}><Text style = {{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(3.5), textDecorationLine:`underline`, marginLeft:20, color:`blue`}}>SHUFFLE</Text></TouchableOpacity>
         </View>
         </View>
         </View>
