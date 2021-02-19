@@ -1,10 +1,10 @@
 import React from "react";
-import { Animated, Text, View, TouchableHighlight, TouchableOpacity, Image, ScrollView } from "react-native";
+import { Animated, Text, View, TouchableHighlight, TouchableOpacity, Image, ScrollView, Alert, AsyncStorage } from "react-native";
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Contacts from 'expo-contacts';
 import { connect } from 'react-redux'
-import {loadContacts, loadKeys, toggleScreen, shuffle } from './../redux/actions';
+import {loadContacts, loadKeys, toggleScreen, shuffle, remove } from './../redux/actions';
 import home from './../assets/home-min.png'
 import * as SMS from 'expo-sms';
 import TypeWriter from 'react-native-typewriter'
@@ -38,7 +38,6 @@ _start = () => {
 };
 
 
-
 text = async() => {
   const isAvailable = await SMS.isAvailableAsync();
   if (isAvailable) {
@@ -50,6 +49,26 @@ text = async() => {
     alert('Sorry. To use this app, you need to have SMS available')
 }
 }
+
+remove = async() => {
+AsyncStorage.setItem(this.props.id, 'disabled');
+this.props.remove(this.props.id);
+this.props.shuffle()
+}
+
+removeClicked = async() => {
+  Alert.alert(
+      'Good riddance',
+      "You are removing this contact from future shuffles. No worries, you can always include them again by going under settings.",
+      [
+        {text: 'Okay', onPress: () => this.remove()},
+        {text: 'Cancel'},
+      ],
+      { cancelable: false }
+    )
+}
+
+
 
 call = () => {
   const url = 'tel:'+this.props.phone
@@ -87,8 +106,9 @@ render(){
         </View>
         <View style={{width: `100%`, minHeight: `40%`}}>
         <View style ={{left: 30, marginTop:20}}>
-        <TypeWriter style = {{color:`gray`,overflow:`hidden`,minHeight: 100,fontSize:RFPercentage(6.5), paddingTop:30, fontFamily:'BebasNeue_400Regular'}} typing={1}>{name}</TypeWriter>
-        <TypeWriter style = {{color:`gray`,overflow:`hidden`,minHeight: 100,fontSize:RFPercentage(4), fontFamily:'BebasNeue_400Regular'}} typing={1}>{phone}</TypeWriter>
+        <TouchableOpacity disabled = {!this.props.enabled} onPress={this.removeClicked}><Text style = {[{paddingTop:30,fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(1.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>[REMOVE FROM FUTURE SHUFFLES]</Text></TouchableOpacity>
+        <TypeWriter style = {{height:`1%`, color:`gray`,minHeight: 100,fontSize:RFPercentage(6.5), paddingTop:30, fontFamily:'BebasNeue_400Regular'}} typing={1}>{name}</TypeWriter>
+        <TypeWriter style = {{height:`1%`, color:`gray`,minHeight: 100,fontSize:RFPercentage(4), fontFamily:'BebasNeue_400Regular'}} typing={1}>{phone}</TypeWriter>
         <View style = {{display:`contents`, flexDirection:`row`}}>
         <TouchableOpacity disabled = {!this.props.enabled} onPress={this.text}><Text style = {[{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(3.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>TEXT THEM</Text></TouchableOpacity>
         <TouchableOpacity disabled = {!this.props.enabled} onPress={this.call}><Text style = {[{fontFamily:'BebasNeue_400Regular', marginLeft:20, fontSize:RFPercentage(3.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>CALL THEM</Text></TouchableOpacity>
@@ -138,7 +158,8 @@ const mapStateToProps = state => {
         name: state.reducers.name,
         marginLeft: state.reducers.marginLeft,
         enabled: state.reducers.enabled,
-        onboarded: state.reducers.onboarded
+        onboarded: state.reducers.onboarded,
+        id: state.reducers.id
     }
 }
 
@@ -155,6 +176,9 @@ const mapDispatchToProps = dispatch => {
       },
       shuffle: () => { // handles onTodoClick prop's call here
         dispatch(shuffle())
+      },
+      remove: (id) => { // handles onTodoClick prop's call here
+        dispatch(remove(id))
       },
     }
 }

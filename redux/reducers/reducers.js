@@ -4,13 +4,17 @@ import {  LOAD_CONTACTS_SUCCESS,
           LOAD_KEYS_ERROR,
           TOGGLE_SCREEN,
           SHUFFLE,
-          FINISH_ONBOARDING} from './../actions.js';
+          FINISH_ONBOARDING,
+          REMOVE} from './../actions.js';
+
+import { Alert } from "react-native";
 
 import _ from 'lodash'
 
 const initialState = {
   contact_access: null,
   contacts: [],
+  id:null,
   name: "XXXXXX XXXXXXX",
   phone:"XXXXXXXXXX",
   homeScreen: true,
@@ -48,8 +52,15 @@ export default function reducer(state=initialState, action){
         ...state,
         homeScreen: !state.homeScreen
       }
+    case REMOVE:
+      state.storageKeys.push(action.payload)
+      return {
+        ...state,
+      }
+
     case SHUFFLE:
-      let filtered = _.reject(state.contacts, v => _.includes(state.storageKeys, v.id));
+      try{
+        let filtered = _.reject(state.contacts, v => _.includes(state.storageKeys, v.id));
       let c = filtered[Math.floor(Math.random() * filtered.length)]
       let ml = 0
       if (state.marginLeft == 300) {
@@ -72,8 +83,14 @@ export default function reducer(state=initialState, action){
         name: c.name,
         phone: c.phoneNumbers[0].number,
         marginLeft: ml,
-        enabled: true
+        enabled: true,
+        id: c.id
       }
+      }
+      catch{
+        Alert.alert('Whoopsies.','To use this app, you must have some contacts saved and enabled under settings.')
+      }
+      
     case FINISH_ONBOARDING:
       return{
         ...state,

@@ -13,6 +13,8 @@ export const LOAD_KEYS_ERROR = 'LOAD_KEYS_ERROR'
 
 export const FINISH_ONBOARDING = 'FINISH_ONBOARDING'
 
+export const REMOVE = 'REMOVE'
+
 export function loadContacts() {
   return dispatch => {
     return Contacts.getContactsAsync({
@@ -21,7 +23,6 @@ export function loadContacts() {
       pageOffset: 0,
       sort: Contacts.SortTypes.LastName
     }).then(r => {
-      AsyncStorage.clear()
       AsyncStorage.setItem('hi',"well aren't ya a smart cookie for checkin this.")
       let cleaned_contacts = []
       for(let i = 0; i < r.data.length; i++){
@@ -62,6 +63,11 @@ export const loadContactsError = error => ({
 export const loadKeysSuccess = keys =>({
     type: LOAD_KEYS_SUCCESS,
     payload: keys
+})
+
+export const remove = id =>({
+    type: REMOVE,
+    payload: id
 })
 
 export const loadKeysError = error => ({

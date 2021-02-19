@@ -45,6 +45,6 @@ render(){
       fontFamily: `BebasNeue_400Regular`,
       fontSize:RFPercentage(3),
       paddingBottom:10,
-      overflow:'hidden'
+      width:`300%`
     }
   });
