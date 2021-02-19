@@ -69,11 +69,13 @@ handleOnClick = () => {
     }
 
 render(){
-  const { homeScreen, phone, storageKeys, contacts, error, toggleScreen, name, marginLeft } = this.props;
-
-  if(homeScreen){
+  const { homeScreen, phone, storageKeys, contacts, error, toggleScreen, name, marginLeft, onboarded } = this.props;
+  if(onboarded==null){
+    return(<View/>)
+  }
+  else if(onboarded==true){
+      if(homeScreen){
     return(
-      <Onboarding/>
       <View style={{
         flex: 1,
         flexDirection: 'column',
@@ -117,7 +119,11 @@ render(){
       </View>
     )
   }
-
+  }
+  else{
+    return(<Onboarding/>)
+    
+  }
 }
 }
 
@@ -131,7 +137,8 @@ const mapStateToProps = state => {
         storageKeys: state.reducers.storageKeys,
         name: state.reducers.name,
         marginLeft: state.reducers.marginLeft,
-        enabled: state.reducers.enabled
+        enabled: state.reducers.enabled,
+        onboarded: state.reducers.onboarded
     }
 }
 

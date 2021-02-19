@@ -11,6 +11,8 @@ export const LOAD_CONTACTS_ERROR = 'LOAD_CONTACTS_ERROR'
 export const LOAD_KEYS_SUCCESS = 'LOAD_KEYS_SUCCESS'
 export const LOAD_KEYS_ERROR = 'LOAD_KEYS_ERROR'
 
+export const FINISH_ONBOARDING = 'FINISH_ONBOARDING'
+
 export function loadContacts() {
   return dispatch => {
     return Contacts.getContactsAsync({
@@ -19,6 +21,7 @@ export function loadContacts() {
       pageOffset: 0,
       sort: Contacts.SortTypes.LastName
     }).then(r => {
+      AsyncStorage.clear()
       AsyncStorage.setItem('hi',"well aren't ya a smart cookie for checkin this.")
       let cleaned_contacts = []
       for(let i = 0; i < r.data.length; i++){
@@ -75,5 +78,11 @@ export function toggleScreen() {
 export function shuffle() {
   return {
     type: SHUFFLE
+  };
+}
+
+export function finishOnboarding() {
+  return {
+    type: FINISH_ONBOARDING
   };
 }

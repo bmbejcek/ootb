@@ -3,7 +3,8 @@ import {  LOAD_CONTACTS_SUCCESS,
           LOAD_KEYS_SUCCESS,
           LOAD_KEYS_ERROR,
           TOGGLE_SCREEN,
-          SHUFFLE} from './../actions.js';
+          SHUFFLE,
+          FINISH_ONBOARDING} from './../actions.js';
 
 import _ from 'lodash'
 
@@ -17,7 +18,8 @@ const initialState = {
   lastPicked: null,
   error: null,
   marginLeft:300,
-  enabled: false
+  enabled: false,
+  onboarded: null,
 }
 
 export default function reducer(state=initialState, action){
@@ -31,9 +33,11 @@ export default function reducer(state=initialState, action){
         ...state,
         error: action.payload};
     case LOAD_KEYS_SUCCESS:
+      var a = action.payload.includes('onboarding')
       return {
         ...state,
         storageKeys: action.payload.slice(),
+        onboarded: a
       }
     case LOAD_KEYS_ERROR:
       return {
@@ -69,6 +73,11 @@ export default function reducer(state=initialState, action){
         phone: c.phoneNumbers[0].number,
         marginLeft: ml,
         enabled: true
+      }
+    case FINISH_ONBOARDING:
+      return{
+        ...state,
+        onboarded:true
       }
     default:
       return state;
