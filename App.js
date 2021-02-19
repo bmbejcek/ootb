@@ -5,6 +5,7 @@ import Container from './components/Container'
 import store from './redux/store'
 import { useFonts, BebasNeue_400Regular } from '@expo-google-fonts/bebas-neue';
 import { View } from "react-native";
+import Onboarding from './components/Onboarding'
 function App() {
   let [fontsLoaded] = useFonts({
       BebasNeue_400Regular,
@@ -12,6 +13,7 @@ function App() {
   if (fontsLoaded){
 return (
 <Provider store={store}>
+<Onboarding/>
 <Container/>
 </Provider>
 );
