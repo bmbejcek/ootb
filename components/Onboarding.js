@@ -12,7 +12,6 @@ class Simple extends React.Component {
 log_done = async() => {
 AsyncStorage.setItem('onboarding',"complete")
 this.props.finishOnboarding();
-console.log('done')
 }
 
 render(){
@@ -27,31 +26,49 @@ render(){
     pages={[
       {
         backgroundColor: '#fff',
-        title: 'You have ' + contacts.length + " contacts on your phone, but you don't communicate with most of them.",
+        title: "Social media has changed the way we communicate.",
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
       },
       {
         backgroundColor: '#fff',
-        title: 'We fall into habits of talking to the same people about the same things.',
+        title: "We have shifted from a world of heartfelt conversations to a world of passive likes.",
+        subtitle:'',
+        image: <Image source={require('./../assets/o.png')} />,
+      },
+            {
+        backgroundColor: '#fff',
+        title: "This is my attempt to change that.",
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
       },
       {
         backgroundColor: '#fff',
-        title: 'Out of the Blue is the modern day equivalent of running into an old friend at a coffeeshop.',
+        title: 'You have ' + contacts.length + " contacts on your phone.",
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
       },
       {
         backgroundColor: '#fff',
-        title: 'Simply shuffle a random contact and reconnect via call or text.',
+        title: "That is " + contacts.length + " ideas to be exchanged, " + contacts.length + " laughs to be shared, and " + contacts.length + " memories to be made.",
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
       },
       {
         backgroundColor: '#fff',
-        title: "Let's build a conversation-first culture together.",
+        title: 'Next time you have the urge to go check social media, why don’t you get a real dose of human connection by using this tool?',
+        subtitle:'',
+        image: <Image source={require('./../assets/o.png')} />,
+      },
+      {
+        backgroundColor: '#fff',
+        title: 'I made this as a gift just to you. Free from ads and analytics tracking. Simply hit shuffle and get a friend to text or call.',
+        subtitle:'',
+        image: <Image source={require('./../assets/o.png')} />,
+      },
+      {
+        backgroundColor: '#fff',
+        title: 'Give it a shot and let me know what you think!',
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
       },
