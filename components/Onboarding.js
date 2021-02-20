@@ -26,24 +26,6 @@ render(){
     pages={[
       {
         backgroundColor: '#fff',
-        title: "Social media has changed the way we communicate.",
-        subtitle:'',
-        image: <Image source={require('./../assets/o.png')} />,
-      },
-      {
-        backgroundColor: '#fff',
-        title: "We have shifted from a world of heartfelt conversations to a world of passive likes.",
-        subtitle:'',
-        image: <Image source={require('./../assets/o.png')} />,
-      },
-            {
-        backgroundColor: '#fff',
-        title: "This is my attempt to change that.",
-        subtitle:'',
-        image: <Image source={require('./../assets/o.png')} />,
-      },
-      {
-        backgroundColor: '#fff',
         title: 'You have ' + contacts.length + " contacts on your phone.",
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
@@ -62,13 +44,7 @@ render(){
       },
       {
         backgroundColor: '#fff',
-        title: 'I made this as a gift just for you, free from ads and analytics tracking. Simply hit shuffle and get a friend to text or call.',
-        subtitle:'',
-        image: <Image source={require('./../assets/o.png')} />,
-      },
-      {
-        backgroundColor: '#fff',
-        title: 'What are you waiting for?! Let's go and build a conversation first world!',
+        title: 'Get started by hitting shuffle!',
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
       },
