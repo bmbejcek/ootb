@@ -62,13 +62,13 @@ render(){
       },
       {
         backgroundColor: '#fff',
-        title: 'I made this as a gift just to you. Free from ads and analytics tracking. Simply hit shuffle and get a friend to text or call.',
+        title: 'I made this as a gift just for you, free from ads and analytics tracking. Simply hit shuffle and get a friend to text or call.',
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
       },
       {
         backgroundColor: '#fff',
-        title: 'Give it a shot and let me know what you think!',
+        title: 'What are you waiting for?! Let's go and build a conversation first world!',
         subtitle:'',
         image: <Image source={require('./../assets/o.png')} />,
       },

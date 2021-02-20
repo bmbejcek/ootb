@@ -101,14 +101,14 @@ render(){
         paddingTop:`10%`
       }}>
         <TouchableOpacity onPress={this.handleOnClick}><Text style={{alignSelf: 'flex-end', right:30, fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(2.5), color:`gray`}}>-->Settings</Text></TouchableOpacity>
-        <View style={{width: `100%`, height: `55%`, float:`right`}}>
+        <View style={{width: `100%`, height: `40%`, float:`right`}}>
         <Animated.View style ={{marginLeft:this.state.marginValue}}><Image style={{height:`100%`, width:`100%`, overflow:`visible`}} source={home} /></Animated.View>
         </View>
         <View style={{width: `100%`, minHeight: `40%`}}>
-        <View style ={{left: 30, marginTop:20}}>
-        <TouchableOpacity disabled = {!this.props.enabled} onPress={this.removeClicked}><Text style = {[{paddingTop:30,fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(1.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>[REMOVE FROM FUTURE SHUFFLES]</Text></TouchableOpacity>
-        <TypeWriter style = {{height:`1%`, color:`gray`,minHeight: 100,fontSize:RFPercentage(6.5), paddingTop:30, fontFamily:'BebasNeue_400Regular'}} typing={1}>{name}</TypeWriter>
-        <TypeWriter style = {{height:`1%`, color:`gray`,minHeight: 100,fontSize:RFPercentage(4), fontFamily:'BebasNeue_400Regular'}} typing={1}>{phone}</TypeWriter>
+        <View style ={{left: 30, marginTop:20, flex:1}}>
+        <TouchableOpacity disabled = {!this.props.enabled} onPress={this.removeClicked}><Text style = {[{paddingTop:30,fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(2.25), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>[REMOVE FROM FUTURE SHUFFLES]</Text></TouchableOpacity>
+        <TypeWriter style = {{width:`300%`,color:`gray`,minHeight: 100,fontSize:RFPercentage(6.5), paddingTop:30, fontFamily:'BebasNeue_400Regular'}} typing={1}><Text numberOfLines={1}>{name}</Text></TypeWriter>
+        <TypeWriter style = {{width:`300%`, color:`gray`,minHeight: 100,fontSize:RFPercentage(4), fontFamily:'BebasNeue_400Regular'}} typing={1}>{phone}</TypeWriter>
         <View style = {{display:`contents`, flexDirection:`row`}}>
         <TouchableOpacity disabled = {!this.props.enabled} onPress={this.text}><Text style = {[{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(3.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>TEXT THEM</Text></TouchableOpacity>
         <TouchableOpacity disabled = {!this.props.enabled} onPress={this.call}><Text style = {[{fontFamily:'BebasNeue_400Regular', marginLeft:20, fontSize:RFPercentage(3.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>CALL THEM</Text></TouchableOpacity>
