@@ -23,6 +23,7 @@ render(){
     onDone={() => this.log_done()}
     showSkip = {false}
     transitionAnimationDuration = {100}
+    allowFontScaling = {false}
     pages={[
       {
         backgroundColor: '#fff',

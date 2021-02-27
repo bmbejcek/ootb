@@ -109,7 +109,7 @@ render(){
         <TouchableOpacity disabled = {!this.props.enabled} onPress={this.removeClicked}><Text style = {[{paddingTop:30,fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(2.25), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>[REMOVE FROM FUTURE SHUFFLES]</Text></TouchableOpacity>
         <TypeWriter style = {{width:`300%`,color:`gray`,minHeight: 100,fontSize:RFPercentage(6.5), paddingTop:30, fontFamily:'BebasNeue_400Regular'}} typing={1}><Text numberOfLines={1}>{name}</Text></TypeWriter>
         <TypeWriter style = {{width:`300%`, color:`gray`,minHeight: 100,fontSize:RFPercentage(4), fontFamily:'BebasNeue_400Regular'}} typing={1}>{phone}</TypeWriter>
-        <View style = {{display:`contents`, flexDirection:`row`}}>
+        <View style = {{display:`flex`, flexDirection:`row`}}>
         <TouchableOpacity disabled = {!this.props.enabled} onPress={this.text}><Text style = {[{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(3.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>TEXT THEM</Text></TouchableOpacity>
         <TouchableOpacity disabled = {!this.props.enabled} onPress={this.call}><Text style = {[{fontFamily:'BebasNeue_400Regular', marginLeft:20, fontSize:RFPercentage(3.5), textDecorationLine:`underline`}, this.props.enabled? {color:'black'} : {color:'lightgray'}]}>CALL THEM</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => this._start()}><Text style = {{fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(3.5), textDecorationLine:`underline`, marginLeft:20, color:`blue`}}>SHUFFLE</Text></TouchableOpacity>
@@ -127,10 +127,10 @@ render(){
         paddingTop:`10%`,
       }}>
         <TouchableOpacity onPress={this.handleOnClick}><Text style={{alignSelf: 'flex-end', right:30, fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(2.5), color:`gray`}}>{'<--Home'}</Text></TouchableOpacity>
-        <View style={{width: `100%`, height: `10%`, marginTop:50, float:`right`}}>
-        <Image style={{height:`100%`, width:`120%`, marginLeft:-50, overflow:`visible`}} source={home} />
+        <View style={{width: `100%`, height: `20%`,float:`right`,overflow:`visible`}}>
+        <Image style={{height:`100%`, width:`120%`, marginLeft:-50, overflow:`visible`, resizeMode: 'contain'}} source={home} />
         </View>
-        <View style={{marginTop:50, paddingLeft:30, paddingRight:30, width: `100%`, paddingTop:30, height: `75%`}}>
+        <View style={{marginTop:20, paddingLeft:30, paddingRight:30, width: `100%`, height: `65%`}}>
         <Text style ={{paddingBottom:10, fontFamily:'BebasNeue_400Regular', fontSize:RFPercentage(3)}}>Select your contacts to include</Text>
         <ScrollView showsVerticalScrollIndicator={false}>
         <ContactList storageKeys={this.props.storageKeys} contacts={this.props.contacts} />

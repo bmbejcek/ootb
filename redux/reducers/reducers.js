@@ -21,7 +21,7 @@ const initialState = {
   storageKeys: [],
   lastPicked: null,
   error: null,
-  marginLeft:300,
+  marginLeft:-400,
   enabled: false,
   onboarded: null,
 }
@@ -63,20 +63,20 @@ export default function reducer(state=initialState, action){
         let filtered = _.reject(state.contacts, v => _.includes(state.storageKeys, v.id));
       let c = filtered[Math.floor(Math.random() * filtered.length)]
       let ml = 0
-      if (state.marginLeft == 300) {
-        ml = 150
+      if (state.marginLeft == -150) {
+        ml = -300
       }
-      else if (state.marginLeft == 150) {
-        ml = -200
+      else if (state.marginLeft == -300) {
+        ml = -450
       }
-      else if (state.marginLeft == -200) {
-        ml = -350
+      else if (state.marginLeft == -450) {
+        ml = -10
       }
-      else if (state.marginLeft == -350) {
-        ml = 0
+      else if (state.marginLeft == -10) {
+        ml = -190
       }
       else{
-        ml = 300
+        ml = -150
       }
       return {
         ...state,
