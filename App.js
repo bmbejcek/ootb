@@ -4,7 +4,11 @@ import { Provider } from 'react-redux'
 import Container from './components/Container'
 import store from './redux/store'
 import { useFonts, BebasNeue_400Regular } from '@expo-google-fonts/bebas-neue';
-import { View } from "react-native";
+import { View, Text } from "react-native";
+
+Text.defaultProps = {};
+Text.defaultProps.maxFontSizeMultiplier = 1.0;
+
 function App() {
   let [fontsLoaded] = useFonts({
       BebasNeue_400Regular,
